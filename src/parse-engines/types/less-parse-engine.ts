@@ -1,21 +1,23 @@
 'use strict';
 
 import * as css from 'css';
+import * as less from 'less';
 import * as vscode from 'vscode';
 import CssClassDefinition from '../../common/css-class-definition';
 import ParseEngine from '../common/parse-engine';
 
-class CssParseEngine implements ParseEngine {
-    public languageId: string = 'css';
+class LessParseEngine implements ParseEngine {
+    public languageId: string = 'less';
 
     public async parse(textDocument: vscode.TextDocument): Promise<CssClassDefinition[]> {
         let definitions: CssClassDefinition[] = [];
 
-        let code: string = textDocument.getText();
+        let code = textDocument.getText();
         let codeAst: css.Stylesheet;
 
         try {
-            codeAst = css.parse(code);
+            const { css: cssString } = await less.render(code);
+            codeAst = css.parse(cssString);
         } catch (error) {
             return [];
         }
@@ -40,4 +42,4 @@ class CssParseEngine implements ParseEngine {
     }
 }
 
-export default CssParseEngine;
+export default LessParseEngine;

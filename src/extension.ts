@@ -20,7 +20,7 @@ function cache(): Promise<void> {
             console.log('Looking for parseable documents...');
             let uris: vscode.Uri[] = await Fetcher.findAllParseableDocuments();
 
-            if (!uris) {
+            if (uris.length === 0) {
                 console.log("Found no documents");
                 notifier.statusBarItem.hide();
                 return;

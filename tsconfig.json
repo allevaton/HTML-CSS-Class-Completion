@@ -7,6 +7,10 @@
         "rootDir": ".",
         "noImplicitAny": true,
         "noImplicitReturns": true,
+        "typeRoots": [
+            "./node_modules/@types",
+            "./node_modules/vscode"
+        ],
         "lib": [
             "es6"
         ]
