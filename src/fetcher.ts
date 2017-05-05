@@ -1,6 +1,5 @@
 'use strict';
 
-import * as _ from 'lodash';
 import * as vscode from 'vscode';
 import ParseEngineRegistry from './parse-engines/parse-engine-registry';
 
@@ -12,7 +11,10 @@ class Fetcher {
             return vscode.workspace.findFiles(`**/*.${languageId}`, exclude);
         }));
 
-        let uris = _.flatten(allFiles);
+        let uris = allFiles.reduce((prev, next) => ([
+            ...prev,
+            ...next
+        ]), [])
 
         return uris;
     }
