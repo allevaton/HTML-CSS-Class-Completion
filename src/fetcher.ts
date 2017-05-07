@@ -5,18 +5,10 @@ import ParseEngineRegistry from './parse-engines/parse-engine-registry';
 
 class Fetcher {
     static async findAllParseableDocuments(): Promise<vscode.Uri[]> {
-        let exclude = 'node_modules/**/node_modules/**/*';
+        const exclude = 'node_modules/**/node_modules/**/*';
+        const languages = ParseEngineRegistry.supportedLanguagesIds.join(',');
 
-        let allFiles = await Promise.all(ParseEngineRegistry.supportedLanguagesIds.map(languageId => {
-            return vscode.workspace.findFiles(`**/*.${languageId}`, exclude);
-        }));
-
-        let uris = allFiles.reduce((prev, next) => ([
-            ...prev,
-            ...next
-        ]), [])
-
-        return uris;
+        return await vscode.workspace.findFiles(`**/*.{${languages}}`, exclude);
     }
 }
 
