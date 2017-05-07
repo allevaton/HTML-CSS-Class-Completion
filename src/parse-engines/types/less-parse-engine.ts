@@ -15,8 +15,12 @@ class LessParseEngine implements ParseEngine {
         let code = textDocument.getText();
         let codeAst: css.Stylesheet;
 
+        // TODO: LESS @imports prefixed with ~ will fail
         try {
-            const { css: cssString } = await less.render(code);
+            const { css: cssString } = await less.render(code, {
+                // Fixes relative imports
+                filename: path.resolve(textDocument.fileName)
+            });
             codeAst = css.parse(cssString);
         } catch (error) {
             return [];
