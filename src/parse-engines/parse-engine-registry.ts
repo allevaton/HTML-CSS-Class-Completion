@@ -1,14 +1,10 @@
-'use strict';
-
 import ParseEngine from './common/parse-engine';
 import CssParseEngine from './types/css-parse-engine';
-import LessParseEngine from './types/less-parse-engine';
 
 class ParseEngineRegistry {
     private static _supportedLanguagesIds: string[];
     private static _registry: ParseEngine[] = [
-        new CssParseEngine(),
-        new LessParseEngine()
+        new CssParseEngine()
     ];
 
     public static get supportedLanguagesIds(): string[] {
@@ -20,9 +16,7 @@ class ParseEngineRegistry {
     }
 
     public static getParseEngine(languageId: string): ParseEngine {
-        let foundParseEngine = ParseEngineRegistry._registry.find((value, index, obj) => {
-            return value.languageId === languageId;
-        });
+        let foundParseEngine = ParseEngineRegistry._registry.find(value => value.languageId === languageId);
 
         if (!foundParseEngine) {
             throw `Could not find a parse engine for the provided language id ("${languageId}").`;
