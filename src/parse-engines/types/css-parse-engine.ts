@@ -7,7 +7,7 @@ import CssClassExtractor from '../common/css-class-extractor';
 class CssParseEngine implements ParseEngine {
     public languageId: string = 'css';
 
-    public parse(textDocument: vscode.TextDocument): CssClassDefinition[] {
+    public async parse(textDocument: vscode.TextDocument): Promise<CssClassDefinition[]> {
         let code: string = textDocument.getText();
         let codeAst: css.Stylesheet = css.parse(code);
 
